@@ -1,9 +1,8 @@
-number_to_numbers = {}
+number_to_numbers = []
 
 for line in open("input.txt").readlines():
     line_split = line.split(": ")
-    number_to_numbers[int(line_split[0])] = [int(n) for n in line_split[1].split(" ")]
-
+    number_to_numbers.append((int(line_split[0]), [int(n) for n in line_split[1].split(" ")]))
 
 def combine_nums(num_one, num_two):
     return int(str(num_one) + str(num_two))
@@ -24,8 +23,7 @@ def recursive_compute(numbers, current_value, current_index, goal_value):
     )
 
 result = 0
-for number in number_to_numbers.keys():
-    if (recursive_compute(number_to_numbers[number], 0, 0, number)):
-        result += number
-       
+for number_and_numbers in number_to_numbers:
+    if (recursive_compute(number_and_numbers[1], 0, 0, number_and_numbers[0])):
+        result += number_and_numbers[0]
 print(result)
